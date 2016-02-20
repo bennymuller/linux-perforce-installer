@@ -4,8 +4,10 @@ wget ftp://ftp.perforce.com/perforce/r15.1/bin.linux26x86_64/p4d
 chmod +x p4d
 sudo mv p4d /usr/local/bin
 sudo adduser perforce
-sudo mkdir /perforce_depot
-sudo chown perforce /perforce_depot
+#sudo mkdir /perforce_depot
+#sudo chown perforce /perforce_depot
+sudo chown perforce /media/sf_Beta
+sudo adduser perforce vboxsf
 sudo mkdir /var/log/perforce
 sudo chown perforce /var/log/perforce
 sudo apt-get install daemon
