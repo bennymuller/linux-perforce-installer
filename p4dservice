@@ -1,39 +1,63 @@
 #!/bin/sh
-
-export P4JOURNAL=/var/log/perforce/journal
-export P4LOG=/var/log/perforce/p4err
-export P4ROOT=/media/sf_Beta/P4DB
-export P4PORT=1666
-
+ 
+### BEGIN INIT INFO
+# Provides: perforce
+# Required-Start: $local_fs mdadm
+# Required-Stop: $local_fs mdadm
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Operations: start, stop, restart, status.
+# Description: Perforce service.
+### END INIT INFO
+ 
 PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
-
 . /lib/lsb/init-functions
-
-p4start="p4d -d"
-p4stop="p4 admin stop"
+ 
+# Log and journal files directory
+p4journal=/data/perforce/logdir/journal
+p4log=/data/perforce/logdir/p4err
+ 
+# Database and versioned files directory
+p4root=/media/sf_Beta
+ 
+# Service params
+p4port=1666
 p4user=perforce
-
+ 
+# Commands
+p4cmdstart="p4d -d -r $p4root -J $p4journal -L $p4log -p $p4port"
+p4cmdstop="p4 -u $p4user -p $p4port admin stop"
+ 
+# System settings
+p4sysuser=perforce
+pidfile=/data/perforce/pid
+ 
 case "$1" in
-  start)
-    log_action_begin_msg "Starting Perforce Server"
-    daemon -u $p4user -- $p4start;
-    ;;
-
-  stop)
-    log_action_begin_msg "Stopping Perforce Server"
-    daemon -u $p4user -- $p4stop;
-    ;;
-
-  restart)
-    stop
-    start
-    ;;
-
+start)
+   log_action_begin_msg "Starting Perforce Server"
+   daemon --pidfile=$pidfile --user=$p4sysuser -- $p4cmdstart;
+   ;;
+ 
+stop)
+   log_action_begin_msg "Stopping Perforce Server"
+   daemon --user=$p4sysuser -- $p4cmdstop;
+   ;;
+ 
+status)
+   status_of_proc -p $pidfile p4d perforce && exit 0 || exit $?
+   ;;
+ 
+restart)
+   /etc/init.d/perforce stop
+   /etc/init.d/perforce start
+   start
+   ;;
+ 
 *)
-  echo "Usage: /etc/init.d/perforce (start|stop|restart)"
-  exit 1
-  ;;
-
+   echo "Usage: /etc/init.d/perforce (start|stop|restart|status)"
+   exit 1
+   ;;
+ 
 esac
-
+ 
 exit 0
