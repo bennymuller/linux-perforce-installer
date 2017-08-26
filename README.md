@@ -8,7 +8,7 @@ Digital ocean:
 2. Add volume storage as required - this will be where our p4 data resides.  Follow the digital ocean guide to ssh in and mount new storage - remember the name of this mount.
 3. IMPORTANT: Update both scripts in this repo so path matches the name of the new mount.
 
-4.Run the following commands. You don't need to download this repo, that is what the first line in the following code does.
+4. Run the following commands. You don't need to download this repo, that is what the first line in the following code does.
 
 ```shell
 sudo wget https://raw.githubusercontent.com/bennymuller/linux-perforce-installer/master/install-perforce
@@ -22,6 +22,7 @@ Afterwards, the server will restart and you should then be able to connect to yo
 
 # Security
 
+Update .profile and .p4enviro to have new ip address of digital ocean server.
 The created server will have default Perforce installation settings. This means anyone who connects to your server can create a user account without authorization. After you create your first user, you should close this security hole by using the following `p4` command from your Perforce Client.
 
         p4 configure set dm.user.noautocreate=2
