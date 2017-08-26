@@ -22,7 +22,10 @@ Afterwards, the server will restart and you should then be able to connect to yo
 
 # Security
 
-Update .profile and .p4enviro to have new ip address of digital ocean server.
+Update .profile and .p4enviro to have new ip address of digital ocean server, then: 
+
+        source ~/.profile
+
 The created server will have default Perforce installation settings. This means anyone who connects to your server can create a user account without authorization. After you create your first user, you should close this security hole by using the following `p4` command from your Perforce Client.
 
         p4 configure set dm.user.noautocreate=2
