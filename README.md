@@ -1,10 +1,14 @@
 # About
 
-This script will install Perforce Server 2015.1 on a 64-bit linux host. It has only been tested on Ubuntu so far. If you are looking for an Ubuntu host.
+This script will install Perforce Server 2015.1 on a 64-bit linux host. I have use this successfuly to quickly setup a p4 server on Digital Ocean.
 
 # Usage
+Digital ocean:
+1. Create Droplet, Ubuntu etc.
+2. Add volume storage as required - this will be where our p4 data resides.  Follow the digital ocean guide to ssh in and mount new storage - remember the name of this mount.
+3. IMPORTANT: Update both scripts in this repo so path matches the name of the new mount.
 
-In shell, run the following commands in your terminal. You don't need to download this repo, that is what the first line in the following code does.
+4.Run the following commands. You don't need to download this repo, that is what the first line in the following code does.
 
 ```shell
 sudo wget https://raw.githubusercontent.com/bennymuller/linux-perforce-installer/master/install-perforce
